@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox-deployment
+  labels:
+    app: busybox
+spec:
+  # Define the number of desired replicas
+  replicas: 1
+  # Selector must match the labels in the template
+  selector:
+    matchLabels:
+      app: busybox
+  template:
+    metadata:
+      labels:
+        app: busybox
+    spec:
+      containers:
+      - name: busybox-container
+        # Use the standard busybox image
+        image: busybox:latest
+        # Command to keep the container running for 3600 seconds (1 hour)
+        args: ["/bin/sh", "-c", "sleep 3600"]
+        # Define resource requests/limits (optional but recommended)
+        resources:
+          requests:
+            cpu: "10m"
+            memory: "16Mi"
+          limits:
+            cpu: "50m"
+            memory: "64Mi"
